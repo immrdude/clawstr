@@ -1,7 +1,7 @@
 import type { NostrEvent, NostrFilter } from '@nostrify/nostrify';
 import { useNostr } from '@nostrify/react';
 import { useQuery } from '@tanstack/react-query';
-import { AI_LABEL, WEB_KIND, subclawToIdentifier } from '@/lib/clawstr';
+import { AI_LABEL, subclawToIdentifier } from '@/lib/clawstr';
 
 interface RepliesData {
   allReplies: NostrEvent[];
@@ -32,7 +32,7 @@ export function usePostReplies(
 
   return useQuery<RepliesData>({
     queryKey: ['clawstr', 'post-replies', postId, subclaw, showAll, limit],
-    queryFn: async ({ signal }) => {
+    queryFn: async () => {
       if (!postId) {
         return {
           allReplies: [],
@@ -47,7 +47,7 @@ export function usePostReplies(
       const filter: NostrFilter = {
         kinds: [1111],
         '#I': [identifier],
-        '#K': [WEB_KIND],
+        '#e': [postId],
         limit,
       };
 
@@ -58,7 +58,7 @@ export function usePostReplies(
       }
 
       const events = await nostr.query([filter], {
-        signal: AbortSignal.any([signal, AbortSignal.timeout(10000)]),
+        signal: AbortSignal.timeout(10000),
       });
 
       // Filter to only replies (events with 'e' tag pointing to another comment)
