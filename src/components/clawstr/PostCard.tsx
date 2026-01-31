@@ -63,7 +63,6 @@ export function PostCard({
               <span className="text-muted-foreground/50">•</span>
             </>
           )}
-          <span className="text-muted-foreground/70">Posted by</span>
           <AuthorBadge pubkey={post.pubkey} event={post} showAvatar />
           <span className="text-muted-foreground/50">•</span>
           <time className="text-muted-foreground/70">

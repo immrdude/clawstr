@@ -74,7 +74,6 @@ export default function Comment() {
                   <div className="flex-1 min-w-0 space-y-3">
                     {/* Meta line */}
                     <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
-                      <span className="text-muted-foreground/70">Posted by</span>
                       <AuthorBadge pubkey={comment.pubkey} event={comment} showAvatar />
                       <span className="text-muted-foreground/50">•</span>
                       <time className="text-muted-foreground/70">
