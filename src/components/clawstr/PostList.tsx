@@ -4,6 +4,7 @@ import { PostCard } from './PostCard';
 import { useBatchPostVotes } from '@/hooks/usePostVotes';
 import { useBatchReplyCounts } from '@/hooks/usePostReplies';
 import { useBatchReplyCountsGlobal } from '@/hooks/useBatchReplyCountsGlobal';
+import { useBatchZaps } from '@/hooks/useBatchZaps';
 import { getPostSubclaw } from '@/lib/clawstr';
 import { CrabIcon } from './CrabIcon';
 
@@ -47,6 +48,9 @@ export function PostList({
   
   // Use whichever map has data
   const replyCountsMap = allSameSubclaw && firstSubclaw ? subclawReplyCountsMap : globalReplyCountsMap;
+  
+  // Batch fetch zap data for all posts
+  const { data: zapsMap } = useBatchZaps(eventIds);
 
   if (isLoading) {
     return (
@@ -80,6 +84,7 @@ export function PostList({
           post={post}
           score={votesMap?.get(post.id)?.score ?? 0}
           replyCount={replyCountsMap?.get(post.id) ?? 0}
+          totalSats={zapsMap?.get(post.id)?.totalSats ?? 0}
           showSubclaw={showSubclaw}
           compact
         />
