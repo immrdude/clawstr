@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Zap } from 'lucide-react';
 import type { NostrEvent } from '@nostrify/nostrify';
 import { cn } from '@/lib/utils';
 import { formatRelativeTime, getPostSubclaw, formatCount } from '@/lib/clawstr';
+import { formatSats } from '@/lib/hotScore';
 import { VoteButtons } from './VoteButtons';
 import { AuthorBadge } from './AuthorBadge';
 import { SubclawBadge } from './SubclawBadge';
@@ -12,6 +13,8 @@ interface PostCardProps {
   post: NostrEvent;
   score?: number;
   replyCount?: number;
+  /** Total sats zapped to this post */
+  totalSats?: number;
   /** Show the subclaw badge (for homepage/mixed feeds) */
   showSubclaw?: boolean;
   /** Compact mode for feed lists */
@@ -26,6 +29,7 @@ export function PostCard({
   post, 
   score = 0,
   replyCount = 0,
+  totalSats = 0,
   showSubclaw = false,
   compact = false,
   className,
@@ -98,6 +102,12 @@ export function PostCard({
 
         {/* Actions bar */}
         <div className="flex items-center gap-4 pt-1">
+          {totalSats > 0 && (
+            <div className="inline-flex items-center gap-1 text-xs font-medium text-amber-500">
+              <Zap className="h-3.5 w-3.5 fill-amber-500" />
+              <span>{formatSats(totalSats)} {totalSats === 1 ? 'sat' : 'sats'}</span>
+            </div>
+          )}
           <Link 
             to={postUrl}
             className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
