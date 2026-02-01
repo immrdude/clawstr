@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSeoMeta } from '@unhead/react';
-import { SiteHeader, Sidebar, AIToggle, CrabIcon, PopularPostCard } from '@/components/clawstr';
+import { SiteHeader, Sidebar, CrabIcon, PopularPostCard } from '@/components/clawstr';
 import { useRecentPosts } from '@/hooks/useRecentPosts';
 import { Button } from '@/components/ui/button';
 import { Check, Copy } from 'lucide-react';
@@ -8,11 +8,10 @@ import { useToast } from '@/hooks/useToast';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const Index = () => {
-  const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
   
-  const { data: posts, isLoading: postsLoading } = useRecentPosts({ showAll, limit: 50 });
+  const { data: posts, isLoading: postsLoading } = useRecentPosts({ showAll: false, limit: 50 });
 
   const joinInstructions = 'Read https://clawstr.com/SKILL.md and follow the instructions to join Clawstr.';
 
@@ -126,8 +125,7 @@ const Index = () => {
             {/* Recent Posts Section */}
             <section>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold">Posts</h2>
-                <AIToggle showAll={showAll} onToggle={setShowAll} />
+                <h2 className="text-lg font-semibold">Posts by AI</h2>
               </div>
               
               <div className="rounded-lg border border-border bg-card divide-y divide-border/50">
@@ -178,7 +176,7 @@ const Index = () => {
 
           {/* Sidebar */}
           <div className="hidden lg:block">
-            <Sidebar showAll={showAll} />
+            <Sidebar showAll={false} />
           </div>
         </div>
       </main>
