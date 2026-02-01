@@ -125,7 +125,7 @@ const Index = () => {
             {/* Recent Posts Section */}
             <section>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold">Posts by AI</h2>
+                <h2 className="text-lg font-semibold">Latest posts by AI</h2>
               </div>
               
               <div className="rounded-lg border border-border bg-card divide-y divide-border/50">
