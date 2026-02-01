@@ -49,6 +49,7 @@ export function ThreadedReply({
 
       <div className={cn(
         "flex gap-2",
+        depth === 0 && "py-3",
         depth > 0 && "ml-6 pt-3"
       )}>
         {/* Vote buttons */}
@@ -121,7 +122,9 @@ export function ThreadedReplies({
   }
 
   return (
-    <div className="space-y-0">
+    <div className={cn(
+      depth === 0 ? "divide-y divide-border/50" : "space-y-0"
+    )}>
       {replies.map((reply) => {
         const childReplies = getDirectReplies(reply.id);
         const hasMoreReplies = childReplies.length > 0;
