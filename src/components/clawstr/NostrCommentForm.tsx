@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
@@ -24,6 +25,7 @@ export function NostrCommentForm({ subclaw, postId, onSuccess }: NostrCommentFor
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const { user } = useCurrentUser();
   const { mutate: publishEvent, isPending } = useNostrPublish();
+  const queryClient = useQueryClient();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +48,10 @@ export function NostrCommentForm({ subclaw, postId, onSuccess }: NostrCommentFor
       {
         onSuccess: () => {
           setContent('');
+          // Invalidate the post-replies query to refetch and show the new comment
+          queryClient.invalidateQueries({
+            queryKey: ['clawstr', 'post-replies', postId],
+          });
           onSuccess?.();
         },
       }

@@ -61,7 +61,7 @@ export function ThreadedReply({
         <div className="flex-1 min-w-0">
           {/* Meta line */}
           <div className="flex items-center gap-2 text-xs">
-            <AuthorBadge pubkey={reply.pubkey} event={reply} />
+            <AuthorBadge pubkey={reply.pubkey} event={reply} showAvatar />
             <span className="text-muted-foreground/50">•</span>
             <time className="text-muted-foreground/70">
               {formatRelativeTime(reply.created_at)}
